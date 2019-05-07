@@ -15,8 +15,8 @@ export const calculate = (height: number): number => {
     }
 
     let rewards: Utils.BigNumber = Utils.BigNumber.ZERO;
-    let currentHeight: number = 0;
-    let constantIndex: number = 0;
+    let currentHeight = 0;
+    let constantIndex = 0;
 
     while (currentHeight < height) {
         const constants = milestones[constantIndex];

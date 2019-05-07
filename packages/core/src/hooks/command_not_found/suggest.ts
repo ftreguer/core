@@ -10,7 +10,7 @@ const closest = (commandIDs: string[], cmd: string) => {
     return minBy(commandIDs, c => Levenshtein.get(cmd, c))!;
 };
 
-export const init: Hook<"init"> = async function(opts) {
+export const init: Hook<"init"> = async function (opts) {
     const commandIDs = opts.config.commandIDs;
 
     if (!commandIDs.length) {

@@ -94,7 +94,7 @@ export abstract class Repository implements IRepository {
                 column ? (items[column.name] = parameters[item]) : delete items[item];
 
                 return items;
-            }, {});
+            },      {});
     }
 
     public __mapColumns(): void {

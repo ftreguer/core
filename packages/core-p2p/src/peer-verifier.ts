@@ -27,7 +27,7 @@ export class PeerVerifier {
     private static readonly verifiedBlocks = new CappedSet();
     private readonly database: Database.IDatabaseService = app.resolvePlugin<Database.IDatabaseService>("database");
     private readonly logger: Logger.ILogger = app.resolvePlugin<Logger.ILogger>("logger");
-    private logPrefix: string;
+    private readonly logPrefix: string;
 
     public constructor(private readonly communicator: P2P.IPeerCommunicator, private readonly peer: P2P.IPeer) {
         this.logPrefix = `Peer verify ${peer.ip}:`;
@@ -152,13 +152,13 @@ export class PeerVerifier {
             if (claimedHeight === ourHeight) {
                 this.log(
                     Severity.DEBUG_EXTRA,
-                    `success: peer's latest block is the same as our latest ` +
+                    "success: peer's latest block is the same as our latest " +
                         `block (height=${claimedHeight}, id=${claimedState.header.id}). Identical chains.`,
                 );
             } else {
                 this.log(
                     Severity.DEBUG_EXTRA,
-                    `success: peer's latest block ` +
+                    "success: peer's latest block " +
                         `(height=${claimedHeight}, id=${claimedState.header.id}) is part of our chain. ` +
                         `Peer is ${ourHeight - claimedHeight} block(s) behind us.`,
                 );
@@ -170,8 +170,8 @@ export class PeerVerifier {
             Severity.INFO,
             `peer's latest block (height=${claimedHeight}, id=${claimedState.header.id}), is different than the ` +
                 `block at the same height in our chain (id=${ourBlockAtHisHeight.id}). Peer has ` +
-                (claimedHeight < ourHeight ? `a shorter and` : `an equal-height but`) +
-                ` different chain.`,
+                (claimedHeight < ourHeight ? "a shorter and" : "an equal-height but") +
+                " different chain.",
         );
 
         return false;
@@ -264,7 +264,7 @@ export class PeerVerifier {
         const highestCommonBlockHeight = await nSect.find(1, Math.min(claimedHeight, ourHeight));
 
         if (highestCommonBlockHeight === undefined) {
-            this.log(Severity.INFO, `failure: could not determine a common block`);
+            this.log(Severity.INFO, "failure: could not determine a common block");
         } else {
             this.log(Severity.DEBUG_EXTRA, `highest common block height: ${highestCommonBlockHeight}`);
         }
@@ -440,7 +440,7 @@ export class PeerVerifier {
         this.log(
             Severity.DEBUG_EXTRA,
             `failure: block ${this.anyToString(blockData)} is not signed by any of the delegates ` +
-                `for the corresponding round: ` +
+                "for the corresponding round: " +
                 this.anyToString(Object.values(delegatesByPublicKey)),
         );
 
@@ -479,7 +479,7 @@ export class PeerVerifier {
      * logged if enabled in the environment.
      */
     private log(severity: Severity, msg: string): void {
-        const fullMsg: string = `${this.logPrefix} ${msg}`;
+        const fullMsg = `${this.logPrefix} ${msg}`;
         switch (severity) {
             case Severity.DEBUG_EXTRA:
                 if (process.env.CORE_P2P_PEER_VERIFIER_DEBUG_EXTRA) {
@@ -491,7 +491,6 @@ export class PeerVerifier {
                 break;
             case Severity.INFO:
                 this.logger.info(fullMsg);
-                break;
         }
     }
 }

@@ -19,10 +19,10 @@ class Network {
         return this.sendRequest("post", path, { body });
     }
 
-    private async sendRequest(method: string, path: string, opts, tries: number = 0) {
+    private async sendRequest(method: string, path: string, opts, tries = 0) {
         try {
             const peer: P2P.IPeer = await this.getPeer();
-            const uri: string = `http://${peer.ip}:${peer.port}/api/${path}`;
+            const uri = `http://${peer.ip}:${peer.port}/api/${path}`;
 
             this.logger.info(`Sending request on "${this.network.name}" to "${uri}"`);
 
@@ -40,7 +40,7 @@ class Network {
             this.logger.error(error.message);
 
             if (tries > 3) {
-                this.logger.error(`Failed to find a responsive peer after 3 tries.`);
+                this.logger.error("Failed to find a responsive peer after 3 tries.");
 
                 return undefined;
             }

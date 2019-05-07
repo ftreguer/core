@@ -10,29 +10,29 @@ export interface ITransactionsRepository extends IRepository {
     findByBlockId(
         blockId: string,
     ): Promise<
-        Array<{
+        {
             id: string;
             serialized: Buffer;
-        }>
+        }[]
     >;
 
     latestByBlock(
         blockId: string,
     ): Promise<
-        Array<{
+        {
             id: string;
             serialized: Buffer;
-        }>
+        }[]
     >;
 
     latestByBlocks(
         blockIds: string[],
     ): Promise<
-        Array<{
+        {
             id: string;
             blockId: string;
             serialized: Buffer;
-        }>
+        }[]
     >;
 
     forged(ids: string[]): Promise<Interfaces.ITransactionData[]>;
@@ -46,7 +46,7 @@ export interface ITransactionsRepository extends IRepository {
     getFeeStatistics(
         days: number,
         minFeeBroadcast: number,
-    ): Promise<Array<{ type: number; fee: number; timestamp: number }>>;
+    ): Promise<{ type: number; fee: number; timestamp: number }[]>;
 
     deleteByBlockId(blockId: string): Promise<void>;
 

@@ -64,7 +64,7 @@ export const startSocketServer = async (service: P2P.IPeerService, config: Recor
         const id = setTimeout(() => {
             clearTimeout(id);
             reject("Socket server failed to setup in 10 seconds.");
-        }, 10000);
+        },                    10000);
     });
 
     const serverReadyPromise = new Promise((resolve, reject) => {

@@ -75,24 +75,24 @@ const decodeRound = (buffer: Buffer) => {
 export class Codec {
     static get blocks() {
         const codec = createCodec();
-        codec.addExtPacker(0x3f, Object, encodeBlock);
-        codec.addExtUnpacker(0x3f, decodeBlock);
+        codec.addExtPacker(0x3F, Object, encodeBlock);
+        codec.addExtUnpacker(0x3F, decodeBlock);
 
         return codec;
     }
 
     static get transactions() {
         const codec = createCodec();
-        codec.addExtPacker(0x4f, Object, encodeTransaction);
-        codec.addExtUnpacker(0x4f, decodeTransaction);
+        codec.addExtPacker(0x4F, Object, encodeTransaction);
+        codec.addExtUnpacker(0x4F, decodeTransaction);
 
         return codec;
     }
 
     static get rounds() {
         const codec = createCodec();
-        codec.addExtPacker(0x5f, Object, encodeRound);
-        codec.addExtUnpacker(0x5f, decodeRound);
+        codec.addExtPacker(0x5F, Object, encodeRound);
+        codec.addExtUnpacker(0x5F, decodeRound);
 
         return codec;
     }

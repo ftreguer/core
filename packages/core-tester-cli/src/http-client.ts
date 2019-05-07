@@ -2,7 +2,7 @@ import { httpie } from "@arkecosystem/core-utils";
 import { logger } from "./logger";
 
 export class HttpClient {
-    private baseUrl: string;
+    private readonly baseUrl: string;
 
     public constructor(baseUrl: string) {
         this.baseUrl = baseUrl;

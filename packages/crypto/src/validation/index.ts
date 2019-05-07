@@ -7,11 +7,8 @@ import { keywords } from "./keywords";
 import { schemas } from "./schemas";
 
 export class Validator {
-    public static make(options: Record<string, any> = {}): Validator {
-        return new Validator(options);
-    }
 
-    private ajv: Ajv.Ajv;
+    private readonly ajv: Ajv.Ajv;
     private readonly transactionSchemas: Set<string> = new Set<string>();
 
     private constructor(options: Record<string, any>) {
@@ -35,6 +32,9 @@ export class Validator {
         }
 
         this.ajv = ajv;
+    }
+    public static make(options: Record<string, any> = {}): Validator {
+        return new Validator(options);
     }
 
     public getInstance(): Ajv.Ajv {

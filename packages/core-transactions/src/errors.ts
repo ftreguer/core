@@ -20,7 +20,7 @@ export class TransactionError extends Error {
 
 export class NotImplementedError extends TransactionError {
     constructor() {
-        super(`Feature is not available.`);
+        super("Feature is not available.");
     }
 }
 
@@ -38,49 +38,49 @@ export class InvalidTransactionTypeError extends TransactionError {
 
 export class InsufficientBalanceError extends TransactionError {
     constructor() {
-        super(`Insufficient balance in the wallet.`);
+        super("Insufficient balance in the wallet.");
     }
 }
 
 export class SenderWalletMismatchError extends TransactionError {
     constructor() {
-        super(`Failed to apply transaction, because the public key does not match the wallet.`);
+        super("Failed to apply transaction, because the public key does not match the wallet.");
     }
 }
 
 export class UnexpectedSecondSignatureError extends TransactionError {
     constructor() {
-        super(`Failed to apply transaction, because wallet does not allow second signatures.`);
+        super("Failed to apply transaction, because wallet does not allow second signatures.");
     }
 }
 
 export class UnexpectedMultiSignatureError extends TransactionError {
     constructor() {
-        super(`Failed to apply transaction, because multi signatures are currently not supported.`);
+        super("Failed to apply transaction, because multi signatures are currently not supported.");
     }
 }
 
 export class InvalidSecondSignatureError extends TransactionError {
     constructor() {
-        super(`Failed to apply transaction, because the second signature could not be verified.`);
+        super("Failed to apply transaction, because the second signature could not be verified.");
     }
 }
 
 export class WalletUsernameEmptyError extends TransactionError {
     constructor() {
-        super(`Failed to apply transaction, because the username is empty.`);
+        super("Failed to apply transaction, because the username is empty.");
     }
 }
 
 export class WalletUsernameNotEmptyError extends TransactionError {
     constructor() {
-        super(`Failed to apply transaction, because the wallet already has a registered username.`);
+        super("Failed to apply transaction, because the wallet already has a registered username.");
     }
 }
 
 export class WalletNoUsernameError extends TransactionError {
     constructor() {
-        super(`Failed to apply transaction, because the wallet has no registered username.`);
+        super("Failed to apply transaction, because the wallet has no registered username.");
     }
 }
 
@@ -92,61 +92,61 @@ export class WalletUsernameAlreadyRegisteredError extends TransactionError {
 
 export class SecondSignatureAlreadyRegisteredError extends TransactionError {
     constructor() {
-        super(`Failed to apply transaction, because second signature is already enabled.`);
+        super("Failed to apply transaction, because second signature is already enabled.");
     }
 }
 export class NotSupportedForMultiSignatureWalletError extends TransactionError {
     constructor() {
-        super(`Failed to apply transaction, because multi signature is enabled.`);
+        super("Failed to apply transaction, because multi signature is enabled.");
     }
 }
 
 export class AlreadyVotedError extends TransactionError {
     constructor() {
-        super(`Failed to apply transaction, because the wallet already voted.`);
+        super("Failed to apply transaction, because the wallet already voted.");
     }
 }
 
 export class NoVoteError extends TransactionError {
     constructor() {
-        super(`Failed to apply transaction, because the wallet has not voted.`);
+        super("Failed to apply transaction, because the wallet has not voted.");
     }
 }
 
 export class UnvoteMismatchError extends TransactionError {
     constructor() {
-        super(`Failed to apply transaction, because the wallet vote does not match.`);
+        super("Failed to apply transaction, because the wallet vote does not match.");
     }
 }
 
 export class VotedForNonDelegateError extends TransactionError {
     constructor(vote: string) {
-        super(`Failed to apply transaction, because only delegates can be voted.`);
+        super("Failed to apply transaction, because only delegates can be voted.");
     }
 }
 
 export class MultiSignatureAlreadyRegisteredError extends TransactionError {
     constructor() {
-        super(`Failed to apply transaction, because multi signature is already enabled.`);
+        super("Failed to apply transaction, because multi signature is already enabled.");
     }
 }
 
 export class InvalidMultiSignatureError extends TransactionError {
     constructor() {
-        super(`Failed to apply transaction, because the multi signature could not be verified.`);
+        super("Failed to apply transaction, because the multi signature could not be verified.");
     }
 }
 
 export class MultiSignatureMinimumKeysError extends TransactionError {
     constructor() {
-        super(`Failed to apply transaction, because too few keys were provided.`);
+        super("Failed to apply transaction, because too few keys were provided.");
     }
 }
 
 export class MultiSignatureKeyCountMismatchError extends TransactionError {
     constructor() {
         super(
-            `Failed to apply transaction, because the number of provided keys does not match the number of signatures.`,
+            "Failed to apply transaction, because the number of provided keys does not match the number of signatures.",
         );
     }
 }

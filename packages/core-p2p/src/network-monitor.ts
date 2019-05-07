@@ -20,8 +20,8 @@ export class NetworkMonitor implements P2P.INetworkMonitor {
     public server: SocketCluster;
     public config: any;
     public nextUpdateNetworkStatusScheduled: boolean;
-    private initializing: boolean = true;
-    private coldStartPeriod: Dato;
+    private initializing = true;
+    private readonly coldStartPeriod: Dato;
 
     private readonly logger: Logger.ILogger = app.resolvePlugin<Logger.ILogger>("logger");
     private readonly emitter: EventEmitter.EventEmitter = app.resolvePlugin<EventEmitter.EventEmitter>("event-emitter");
@@ -85,7 +85,7 @@ export class NetworkMonitor implements P2P.INetworkMonitor {
         return this;
     }
 
-    public async updateNetworkStatus(networkStart: boolean = false): Promise<void> {
+    public async updateNetworkStatus(networkStart = false): Promise<void> {
         if (process.env.CORE_ENV === "test" || process.env.NODE_ENV === "test") {
             return;
         }
@@ -114,13 +114,13 @@ export class NetworkMonitor implements P2P.INetworkMonitor {
 
             nextRunDelaySeconds = 5;
 
-            this.logger.info(`Couldn't find enough peers. Falling back to seed peers.`);
+            this.logger.info("Couldn't find enough peers. Falling back to seed peers.");
         }
 
         this.scheduleUpdateNetworkStatus(nextRunDelaySeconds);
     }
 
-    public async cleanPeers(fast: boolean = false, forcePing: boolean = false): Promise<void> {
+    public async cleanPeers(fast = false, forcePing = false): Promise<void> {
         const peers = this.storage.getPeers();
         let unresponsivePeers = 0;
         const pingDelay = fast ? 1500 : app.resolveOptions("p2p").globalTimeout;
@@ -273,7 +273,7 @@ export class NetworkMonitor implements P2P.INetworkMonitor {
 
     public async syncWithNetwork(
         fromBlockHeight: number,
-        maxParallelDownloads: number = 25,
+        maxParallelDownloads = 25,
     ): Promise<Interfaces.IBlockData[]> {
         try {
             const peersAll: P2P.IPeer[] = this.storage.getPeers();
@@ -298,7 +298,7 @@ export class NetworkMonitor implements P2P.INetworkMonitor {
                 return this.communicator.downloadBlocks(sample(peersFiltered), fromBlockHeight);
             }
 
-            const chunkSize: number = 400;
+            const chunkSize = 400;
             const chunksMissingToSync: number = Math.ceil((networkHeight - fromBlockHeight) / chunkSize);
             const chunksToDownload: number = Math.min(chunksMissingToSync, peersFiltered.length, maxParallelDownloads);
 

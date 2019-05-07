@@ -87,11 +87,11 @@ export class TransactionsBusinessRepository implements Database.ITransactionsBus
     public async getFeeStatistics(
         days: number,
     ): Promise<
-        Array<{
+        {
             type: number;
             fee: number;
             timestamp: number;
-        }>
+        }[]
     > {
         return this.databaseServiceProvider().connection.transactionsRepository.getFeeStatistics(
             days,

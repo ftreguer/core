@@ -30,7 +30,7 @@ export interface IPeerStorage {
 
 export interface IPeerRepository<T> {
     all(): Map<string, T>;
-    entries(): Array<[string, T]>;
+    entries(): [string, T][];
     keys(): string[];
     values(): T[];
 

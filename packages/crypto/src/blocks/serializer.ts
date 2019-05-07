@@ -10,7 +10,7 @@ export class Serializer {
         const transactions: ITransactionData[] = block.transactions || [];
         block.numberOfTransactions = block.numberOfTransactions || transactions.length;
 
-        const serializedHeader: Buffer = this.serialize(block);
+        const serializedHeader: Buffer = Serializer.serialize(block);
 
         const buffer: ByteBuffer = new ByteBuffer(serializedHeader.length + transactions.length * 4, true)
             .append(serializedHeader)
@@ -25,13 +25,13 @@ export class Serializer {
         return buffer.flip().toBuffer();
     }
 
-    public static serialize(block: IBlockData, includeSignature: boolean = true): Buffer {
+    public static serialize(block: IBlockData, includeSignature = true): Buffer {
         const buffer: ByteBuffer = new ByteBuffer(512, true);
 
-        this.serializeHeader(block, buffer);
+        Serializer.serializeHeader(block, buffer);
 
         if (includeSignature) {
-            this.serializeSignature(block, buffer);
+            Serializer.serializeSignature(block, buffer);
         }
 
         return buffer.flip().toBuffer();

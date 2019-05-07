@@ -15,7 +15,7 @@ export class Container implements container.IContainer {
     public plugins: PluginRegistrar;
     public shuttingDown: boolean;
     public version: string;
-    public isReady: boolean = false;
+    public isReady = false;
     public variables: Record<string, any>;
     public config: any;
 

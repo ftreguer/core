@@ -61,7 +61,7 @@ export const verify = (bip38: string): boolean => {
 
     // encrypted WIF
     if (type === 0x42) {
-        if (flag !== 0xc0 && flag !== 0xe0) {
+        if (flag !== 0xC0 && flag !== 0xE0) {
             return false;
         }
 
@@ -102,7 +102,7 @@ const encryptRaw = (buffer: Buffer, compressed: boolean, passphrase: string): Bu
     const result = Buffer.allocUnsafe(7 + 32);
     result.writeUInt8(0x01, 0);
     result.writeUInt8(0x42, 1);
-    result.writeUInt8(compressed ? 0xe0 : 0xc0, 2);
+    result.writeUInt8(compressed ? 0xE0 : 0xC0, 2);
     salt.copy(result, 3);
     cipherText.copy(result, 7);
 
@@ -197,9 +197,9 @@ const decryptRaw = (buffer: Buffer, passphrase: string): IDecryptResult => {
     }
 
     const flagByte = buffer.readUInt8(2);
-    const compressed = flagByte === 0xe0;
-    if (!compressed && flagByte !== 0xc0) {
-        throw new Bip38CompressionError(0xc0, flagByte);
+    const compressed = flagByte === 0xE0;
+    if (!compressed && flagByte !== 0xC0) {
+        throw new Bip38CompressionError(0xC0, flagByte);
     }
 
     const salt = buffer.slice(3, 7);

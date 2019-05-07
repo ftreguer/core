@@ -10,11 +10,11 @@ import { Verifier } from "./verifier";
 
 export class TransactionFactory {
     public static fromHex(hex: string): ITransaction {
-        return this.fromSerialized(hex);
+        return TransactionFactory.fromSerialized(hex);
     }
 
     public static fromBytes(buffer: Buffer): ITransaction {
-        return this.fromSerialized(buffer ? buffer.toString("hex") : undefined);
+        return TransactionFactory.fromSerialized(buffer ? buffer.toString("hex") : undefined);
     }
 
     /**
@@ -41,10 +41,10 @@ export class TransactionFactory {
         data.amount = BigNumber.make(data.amount);
         data.fee = BigNumber.make(data.fee);
 
-        return this.fromData(data);
+        return TransactionFactory.fromData(data);
     }
 
-    public static fromData(data: ITransactionData, strict: boolean = true): ITransaction {
+    public static fromData(data: ITransactionData, strict = true): ITransaction {
         const { value, error } = Verifier.verifySchema(data, strict);
 
         if (error && !isException(value)) {

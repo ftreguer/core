@@ -50,7 +50,7 @@ export class NetworkVersionError extends CryptoError {
 
 export class NotImplementedError extends CryptoError {
     constructor() {
-        super(`Feature is not available.`);
+        super("Feature is not available.");
     }
 }
 
@@ -74,7 +74,7 @@ export class TransactionTypeError extends CryptoError {
 
 export class MalformedTransactionBytesError extends CryptoError {
     constructor() {
-        super(`Failed to deserialize transaction, because the bytes are malformed.`);
+        super("Failed to deserialize transaction, because the bytes are malformed.");
     }
 }
 
@@ -122,7 +122,7 @@ export class MaximumPaymentCountExceededError extends CryptoError {
 
 export class MissingTransactionSignatureError extends CryptoError {
     constructor() {
-        super(`Expected the transaction to be signed.`);
+        super("Expected the transaction to be signed.");
     }
 }
 
@@ -150,6 +150,6 @@ export class InvalidMilestoneConfigurationError extends CryptoError {
 
 export class InvalidMultiSignatureAssetError extends CryptoError {
     constructor() {
-        super(`The multi signature asset is invalid.`);
+        super("The multi signature asset is invalid.");
     }
 }

@@ -145,12 +145,12 @@ export class Connection implements TransactionPool.IConnection {
         return this.getTransactionsData<string>(start, size, "id", this.options.maxTransactionBytes);
     }
 
-    public getTransactionsData<T>(start: number, size: number, property: string, maxBytes: number = 0): T[] {
+    public getTransactionsData<T>(start: number, size: number, property: string, maxBytes = 0): T[] {
         this.purgeExpired();
 
         const data: T[] = [];
 
-        let transactionBytes: number = 0;
+        let transactionBytes = 0;
 
         let i = 0;
         for (const transaction of this.memory.allSortedByFee()) {
@@ -159,7 +159,7 @@ export class Connection implements TransactionPool.IConnection {
             }
 
             if (i >= start) {
-                let pushTransaction: boolean = false;
+                let pushTransaction = false;
 
                 assert.notStrictEqual(transaction[property], undefined);
 

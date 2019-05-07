@@ -11,7 +11,7 @@ export class Client {
     public hosts: IRelayHost[];
     private readonly logger: Logger.ILogger = app.resolvePlugin<Logger.ILogger>("logger");
     private host: IRelayHost;
-    private headers: {
+    private readonly headers: {
         version: string;
         port: number;
         nethash: string;
@@ -126,7 +126,7 @@ export class Client {
         throw new HostNoResponseError(this.hosts.map(host => host.hostname).join());
     }
 
-    private async emit<T = object>(event: string, data: Record<string, any> = {}, timeout: number = 2000): Promise<T> {
+    private async emit<T = object>(event: string, data: Record<string, any> = {}, timeout = 2000): Promise<T> {
         try {
             const response: P2P.IResponse<T> = await socketEmit(
                 this.host.hostname,

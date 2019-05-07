@@ -13,15 +13,15 @@ export class Slots {
     }
 
     public static getTimeInMsUntilNextSlot(): number {
-        const nextSlotTime: number = this.getSlotTime(this.getNextSlot());
-        const now: number = this.getTime();
+        const nextSlotTime: number = Slots.getSlotTime(Slots.getNextSlot());
+        const now: number = Slots.getTime();
 
         return (nextSlotTime - now) * 1000;
     }
 
     public static getSlotNumber(epoch?: number): number {
         if (epoch === undefined) {
-            epoch = this.getTime();
+            epoch = Slots.getTime();
         }
 
         return Math.floor(epoch / configManager.getMilestone(1).blocktime);
@@ -32,12 +32,12 @@ export class Slots {
     }
 
     public static getNextSlot(): number {
-        return this.getSlotNumber() + 1;
+        return Slots.getSlotNumber() + 1;
     }
 
     public static isForgingAllowed(epoch?: number): boolean {
         if (epoch === undefined) {
-            epoch = this.getTime();
+            epoch = Slots.getTime();
         }
 
         const blockTime: number = configManager.getMilestone(1).blocktime;

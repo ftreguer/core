@@ -15,15 +15,15 @@ export class BlockFactory {
         data.blockSignature = Hash.signECDSA(hash, keys);
         data.id = Block.getId(data);
 
-        return this.fromData(data);
+        return BlockFactory.fromData(data);
     }
 
     public static fromHex(hex: string): IBlock {
-        return this.fromSerialized(hex);
+        return BlockFactory.fromSerialized(hex);
     }
 
     public static fromBytes(buffer: Buffer): IBlock {
-        return this.fromSerialized(buffer ? buffer.toString("hex") : undefined);
+        return BlockFactory.fromSerialized(buffer ? buffer.toString("hex") : undefined);
     }
 
     public static fromJson(json: IBlockJson): IBlock {
@@ -38,7 +38,7 @@ export class BlockFactory {
             transaction.fee = BigNumber.make(transaction.fee);
         }
 
-        return this.fromData(data);
+        return BlockFactory.fromData(data);
     }
 
     public static fromData(data: IBlockData): IBlock {

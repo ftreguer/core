@@ -14,10 +14,10 @@ export class TransactionsRepository extends Repository implements Database.ITran
     public async findByBlockId(
         id: string,
     ): Promise<
-        Array<{
+        {
             id: string;
             serialized: Buffer;
-        }>
+        }[]
     > {
         return this.db.manyOrNone(queries.transactions.findByBlock, { id });
     }
@@ -25,10 +25,10 @@ export class TransactionsRepository extends Repository implements Database.ITran
     public async latestByBlock(
         id: string,
     ): Promise<
-        Array<{
+        {
             id: string;
             serialized: Buffer;
-        }>
+        }[]
     > {
         return this.db.manyOrNone(queries.transactions.latestByBlock, { id });
     }
@@ -36,11 +36,11 @@ export class TransactionsRepository extends Repository implements Database.ITran
     public async latestByBlocks(
         ids: string[],
     ): Promise<
-        Array<{
+        {
             id: string;
             blockId: string;
             serialized: Buffer;
-        }>
+        }[]
     > {
         return this.db.manyOrNone(queries.transactions.latestByBlocks, { ids });
     }
@@ -64,7 +64,7 @@ export class TransactionsRepository extends Repository implements Database.ITran
     public async getFeeStatistics(
         days: number,
         minFeeBroadcast?: number,
-    ): Promise<Array<{ type: number; fee: number; timestamp: number }>> {
+    ): Promise<{ type: number; fee: number; timestamp: number }[]> {
         return this.findMany(
             this.query
                 .select(this.query.type, this.query.fee, this.query.timestamp)
@@ -79,7 +79,7 @@ export class TransactionsRepository extends Repository implements Database.ITran
                     ),
                 )
                 .and(this.query.fee.gte(minFeeBroadcast))
-                .order('"timestamp" DESC'),
+                .order("\"timestamp\" DESC"),
         );
     }
 

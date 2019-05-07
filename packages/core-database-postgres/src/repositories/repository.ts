@@ -82,7 +82,7 @@ export abstract class Repository implements Database.IRepository {
         //          Sort Key: "timestamp" DESC
         //          ->  Seq Scan on transactions  (cost=0.00..11.20 rows=120 width=622)
 
-        let count: number = 0;
+        let count = 0;
         const explainedQuery = await this.db.manyOrNone(`EXPLAIN ${selectQuery.toString()}`);
         for (const row of explainedQuery) {
             const line: any = Object.values(row)[0];

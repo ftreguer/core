@@ -18,8 +18,8 @@ export class DatabaseService implements Database.IDatabaseService {
     public blocksBusinessRepository: Database.IBlocksBusinessRepository;
     public transactionsBusinessRepository: Database.ITransactionsBusinessRepository;
     public blocksInCurrentRound: Interfaces.IBlock[] = undefined;
-    public stateStarted: boolean = false;
-    public restoredDatabaseIntegrity: boolean = false;
+    public stateStarted = false;
+    public restoredDatabaseIntegrity = false;
     public forgingDelegates: State.IDelegateWallet[] = undefined;
     public cache: Map<any, any> = new Map();
 
@@ -200,10 +200,10 @@ export class DatabaseService implements Database.IDatabaseService {
             return undefined;
         }
 
-        const transactions: Array<{
+        const transactions: {
             serialized: Buffer;
             id: string;
-        }> = await this.connection.transactionsRepository.findByBlockId(block.id);
+        }[] = await this.connection.transactionsRepository.findByBlockId(block.id);
 
         block.transactions = transactions.map(
             ({ serialized, id }) => Transactions.TransactionFactory.fromBytesUnsafe(serialized, id).data,
@@ -327,10 +327,10 @@ export class DatabaseService implements Database.IDatabaseService {
             return undefined;
         }
 
-        const transactions: Array<{
+        const transactions: {
             serialized: Buffer;
             id: string;
-        }> = await this.connection.transactionsRepository.latestByBlock(block.id);
+        }[] = await this.connection.transactionsRepository.latestByBlock(block.id);
 
         block.transactions = transactions.map(
             ({ serialized, id }) => Transactions.TransactionFactory.fromBytesUnsafe(serialized, id).data,
@@ -390,11 +390,11 @@ export class DatabaseService implements Database.IDatabaseService {
 
         const ids: string[] = blocks.map((block: Interfaces.IBlockData) => block.id);
 
-        const dbTransactions: Array<{
+        const dbTransactions: {
             id: string;
             blockId: string;
             serialized: Buffer;
-        }> = await this.connection.transactionsRepository.latestByBlocks(ids);
+        }[] = await this.connection.transactionsRepository.latestByBlocks(ids);
 
         const transactions = dbTransactions.map(tx => {
             const { data } = Transactions.TransactionFactory.fromBytesUnsafe(tx.serialized, tx.id);
@@ -620,7 +620,7 @@ export class DatabaseService implements Database.IDatabaseService {
         // Revert all blocks in reverse order
         const index: number = blocks.length - 1;
 
-        let height: number = 0;
+        let height = 0;
         for (let i = index; i >= 0; i--) {
             height = blocks[i].data.height;
 

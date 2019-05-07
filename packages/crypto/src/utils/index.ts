@@ -61,7 +61,7 @@ export const isGenesisTransaction = (id: string): boolean => {
 
         genesisTransactions = configManager
             .get("genesisBlock.transactions")
-            .reduce((acc, curr) => Object.assign(acc, { [curr.id]: true }), {});
+            .reduce((acc, curr) => ({...acc,  [curr.id]: true}), {});
     }
 
     return genesisTransactions[id];

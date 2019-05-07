@@ -17,15 +17,15 @@ export abstract class Transaction implements ITransaction {
     }
     public static type: TransactionTypes = undefined;
 
-    public static getSchema(): TransactionSchema {
-        throw new NotImplementedError();
-    }
-
     public isVerified: boolean;
 
     public data: ITransactionData;
     public serialized: Buffer;
     public timestamp: number;
+
+    public static getSchema(): TransactionSchema {
+        throw new NotImplementedError();
+    }
 
     public abstract serialize(): ByteBuffer;
     public abstract deserialize(buf: ByteBuffer): void;

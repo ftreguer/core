@@ -59,7 +59,7 @@ export class Blockchain implements blockchain.IBlockchain {
     public options: any;
     public queue: async.AsyncQueue<any>;
     protected blockProcessor: BlockProcessor;
-    private actions: any;
+    private readonly actions: any;
 
     /**
      * Create a new blockchain manager instance.
@@ -92,7 +92,7 @@ export class Blockchain implements blockchain.IBlockchain {
                 logger.error(error.stack);
                 return cb();
             }
-        }, 1);
+        },                       1);
 
         this.queue.drain = () => this.dispatch("PROCESSFINISHED");
     }
@@ -178,7 +178,7 @@ export class Blockchain implements blockchain.IBlockchain {
         this.state.wakeUpTimeout = setTimeout(() => {
             this.state.wakeUpTimeout = undefined;
             return this.dispatch("WAKEUP");
-        }, 60000);
+        },                                    60000);
     }
 
     /**
@@ -228,7 +228,7 @@ export class Blockchain implements blockchain.IBlockchain {
     /**
      * Push a block to the process queue.
      */
-    public handleIncomingBlock(block: Interfaces.IBlockData, remoteAddress: string, fromForger: boolean = false): void {
+    public handleIncomingBlock(block: Interfaces.IBlockData, remoteAddress: string, fromForger = false): void {
         this.pushPingBlock(block, fromForger);
 
         logger.info(
@@ -253,7 +253,7 @@ export class Blockchain implements blockchain.IBlockchain {
 
             emitter.emit("block.received", block);
         } else {
-            logger.info(`Block disregarded because blockchain is not ready`);
+            logger.info("Block disregarded because blockchain is not ready");
 
             emitter.emit("block.disregarded", block);
         }
@@ -514,7 +514,7 @@ export class Blockchain implements blockchain.IBlockchain {
     /**
      * Push ping block.
      */
-    public pushPingBlock(block: Interfaces.IBlockData, fromForger: boolean = false): void {
+    public pushPingBlock(block: Interfaces.IBlockData, fromForger = false): void {
         this.state.pushPingBlock(block, fromForger);
     }
 }

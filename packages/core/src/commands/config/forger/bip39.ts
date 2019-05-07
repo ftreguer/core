@@ -6,7 +6,7 @@ import { CommandFlags } from "../../../types";
 import { BaseCommand } from "../../command";
 
 export class BIP39Command extends BaseCommand {
-    public static description: string = "Configure the forging delegate (BIP38)";
+    public static description = "Configure the forging delegate (BIP38)";
 
     public static examples: string[] = [
         `Configure a delegate using a BIP39 passphrase
@@ -35,7 +35,7 @@ $ ark config:forger:bip39 --bip39="..."
                 name: "bip39",
                 message: "Please enter your delegate passphrase",
                 validate: value =>
-                    !bip39.validateMnemonic(value) ? `Failed to verify the given passphrase as BIP39 compliant.` : true,
+                    !bip39.validateMnemonic(value) ? "Failed to verify the given passphrase as BIP39 compliant." : true,
             },
             {
                 type: "confirm",
@@ -66,7 +66,7 @@ $ ark config:forger:bip39 --bip39="..."
 
         this.addTask("Validate passphrase", async () => {
             if (!bip39.validateMnemonic(flags.bip39)) {
-                this.error(`Failed to verify the given passphrase as BIP39 compliant.`);
+                this.error("Failed to verify the given passphrase as BIP39 compliant.");
             }
         });
 

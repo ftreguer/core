@@ -14,8 +14,8 @@ export class ForgerManager {
     private readonly config = app.getConfig();
 
     private secrets: string[];
-    private network: Types.NetworkType;
-    private client: Client;
+    private readonly network: Types.NetworkType;
+    private readonly client: Client;
     private delegates: Delegate[];
     private usernames: { [key: string]: string };
     private isStopped: boolean;
@@ -30,7 +30,7 @@ export class ForgerManager {
 
     public async startForging(bip38: string, password: string): Promise<void> {
         if (!bip38 && (!this.secrets || !this.secrets.length || !Array.isArray(this.secrets))) {
-            this.logger.warn('No delegate found! Please check your "delegates.json" file and try again.');
+            this.logger.warn("No delegate found! Please check your \"delegates.json\" file and try again.");
             return;
         }
 
@@ -44,7 +44,7 @@ export class ForgerManager {
         }
 
         if (!this.delegates) {
-            this.logger.warn('No delegate found! Please check your "delegates.json" file and try again.');
+            this.logger.warn("No delegate found! Please check your \"delegates.json\" file and try again.");
             return;
         }
 
@@ -208,9 +208,9 @@ export class ForgerManager {
             return false;
         }
 
-        const overHeightBlockHeaders: Array<{
+        const overHeightBlockHeaders: {
             [id: string]: any;
-        }> = networkState.getOverHeightBlockHeaders();
+        }[] = networkState.getOverHeightBlockHeaders();
         if (overHeightBlockHeaders.length > 0) {
             this.logger.info(
                 `Detected ${overHeightBlockHeaders.length} distinct overheight block ${pluralize(
@@ -255,7 +255,7 @@ export class ForgerManager {
         this.round = await this.client.getRound();
 
         this.usernames = this.round.delegates.reduce(
-            (acc, delegate) => Object.assign(acc, { [delegate.publicKey]: delegate.username }),
+            (acc, delegate) => ({...acc,  [delegate.publicKey]: delegate.username}),
             {},
         );
 

@@ -17,9 +17,9 @@ export class Serializer {
         const version: number = transaction.version || 1;
 
         if (version === 1) {
-            return this.getBytesV1(transaction, options);
+            return Serializer.getBytesV1(transaction, options);
         } else if (version === 2 && configManager.getMilestone().aip11) {
-            return this.getBytesV2(transaction, options);
+            return Serializer.getBytesV2(transaction, options);
         } else {
             throw new TransactionVersionError(version);
         }
@@ -31,13 +31,13 @@ export class Serializer {
     public static serialize(transaction: ITransaction, options: ISerializeOptions = {}): Buffer {
         const buffer: ByteBuffer = new ByteBuffer(512, true);
 
-        this.serializeCommon(transaction.data, buffer);
-        this.serializeVendorField(transaction, buffer);
+        Serializer.serializeCommon(transaction.data, buffer);
+        Serializer.serializeVendorField(transaction, buffer);
 
         const typeBuffer: ByteBuffer = transaction.serialize(options).flip();
         buffer.append(typeBuffer);
 
-        this.serializeSignatures(transaction.data, buffer, options);
+        Serializer.serializeSignatures(transaction.data, buffer, options);
 
         const flippedBuffer: Buffer = buffer.flip().toBuffer();
         transaction.serialized = flippedBuffer;
@@ -49,7 +49,7 @@ export class Serializer {
      * Serializes the given transaction prior to AIP11 (legacy).
      */
     private static getBytesV1(transaction: ITransactionData, options: ISerializeOptions = {}): Buffer {
-        let assetSize: number = 0;
+        let assetSize = 0;
         let assetBytes: Buffer | Uint8Array;
 
         switch (transaction.type) {
@@ -101,7 +101,6 @@ export class Serializer {
 
                 assetBytes = bb.toBuffer();
                 assetSize = assetBytes.length;
-                break;
             }
         }
 
@@ -191,11 +190,11 @@ export class Serializer {
     }
 
     private static getBytesV2(transaction: ITransactionData, options: ISerializeOptions = {}): Buffer {
-        return this.serialize(TransactionTypeFactory.create(transaction), options);
+        return Serializer.serialize(TransactionTypeFactory.create(transaction), options);
     }
 
     private static serializeCommon(transaction: ITransactionData, buffer: ByteBuffer): void {
-        buffer.writeByte(0xff); // fill, to disambiguate from v1
+        buffer.writeByte(0xFF); // fill, to disambiguate from v1
         buffer.writeByte(transaction.version || 0x01); // version
         buffer.writeByte(transaction.network || configManager.get("network.pubKeyHash")); // ark = 0x17, devnet = 0x30
         buffer.writeByte(transaction.type);

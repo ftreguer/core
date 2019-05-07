@@ -31,11 +31,11 @@ export interface ITransactionsBusinessRepository {
     getFeeStatistics(
         days: number,
     ): Promise<
-        Array<{
+        {
             type: number;
             fee: number;
             timestamp: number;
-        }>
+        }[]
     >;
 
     search(params: IParameters): Promise<ITransactionsPaginated>;

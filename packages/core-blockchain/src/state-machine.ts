@@ -239,7 +239,7 @@ blockchainMachine.actionMap = (blockchain: Blockchain) => ({
                 blockchain.enqueueBlocks(blocks);
                 blockchain.dispatch("DOWNLOADED");
             } catch (error) {
-                logger.warn(`Failed to enqueue downloaded block.`);
+                logger.warn("Failed to enqueue downloaded block.");
 
                 blockchain.dispatch("NOBLOCK");
 

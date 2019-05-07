@@ -3,7 +3,7 @@ import { SocketErrors } from "../enums";
 import { validateHeaders } from "./utils/validate-headers";
 
 export class Worker extends SCWorker {
-    private peersMsgTimestamps: Record<string, number[]> = {};
+    private readonly peersMsgTimestamps: Record<string, number[]> = {};
     private config: Record<string, any>;
 
     public async run() {
@@ -147,7 +147,7 @@ export class Worker extends SCWorker {
         return data.suspended;
     }
 
-    private async log(message: string, level: string = "info"): Promise<void> {
+    private async log(message: string, level = "info"): Promise<void> {
         try {
             await this.sendToMasterAsync("p2p.utils.log", {
                 data: { level, message },

@@ -4,7 +4,7 @@ import { CommandFlags } from "../../types";
 import { BaseCommand } from "../command";
 
 export class GetCommand extends BaseCommand {
-    public static description: string = "Get the value of an environment variable";
+    public static description = "Get the value of an environment variable";
 
     public static examples: string[] = [
         `Get the log level
@@ -16,7 +16,7 @@ $ ark env:get CORE_LOG_LEVEL
         ...BaseCommand.flagsNetwork,
     };
 
-    public static args: Array<{ name: string; required: boolean; hidden: boolean }> = [
+    public static args: { name: string; required: boolean; hidden: boolean }[] = [
         { name: "key", required: true, hidden: false },
     ];
 

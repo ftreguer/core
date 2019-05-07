@@ -392,7 +392,7 @@ export class WalletManager implements State.IWalletManager {
         sender: State.IWallet,
         recipient: State.IWallet,
         transaction: Interfaces.ITransactionData,
-        revert: boolean = false,
+        revert = false,
     ): void {
         // TODO: multipayment?
         if (transaction.type !== Enums.TransactionTypes.Vote) {

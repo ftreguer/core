@@ -5,11 +5,11 @@ export class LoggerManager {
     private readonly factory: LoggerFactory = new LoggerFactory();
     private readonly drivers: Map<string, Logger.ILogger> = new Map<string, Logger.ILogger>();
 
-    public driver(name: string = "default"): Logger.ILogger {
+    public driver(name = "default"): Logger.ILogger {
         return this.drivers.get(name);
     }
 
-    public createDriver(driver: Logger.ILogger, name: string = "default"): Logger.ILogger {
+    public createDriver(driver: Logger.ILogger, name = "default"): Logger.ILogger {
         this.drivers.set(name, this.factory.make(driver));
 
         return this.driver();

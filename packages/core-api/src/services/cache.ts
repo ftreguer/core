@@ -3,11 +3,11 @@ import { Crypto } from "@arkecosystem/crypto";
 import Hapi, { ServerMethod } from "@hapi/hapi";
 
 export class ServerCache {
+
+    private constructor(readonly server: Hapi.Server) {}
     public static make(server: Hapi.Server): ServerCache {
         return new ServerCache(server);
     }
-
-    private constructor(readonly server: Hapi.Server) {}
 
     public method(name: string, method: ServerMethod, expiresIn: number, argsCallback?: any): this {
         let options = {};

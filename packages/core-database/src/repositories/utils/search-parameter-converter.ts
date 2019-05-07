@@ -2,7 +2,7 @@ import { Database } from "@arkecosystem/core-interfaces";
 import snakeCase from "lodash.snakecase";
 
 export class SearchParameterConverter implements Database.IISearchParameterConverter {
-    constructor(private databaseModel: Database.IModel) {}
+    constructor(private readonly databaseModel: Database.IModel) {}
 
     public convert(params: Database.IParameters, orderBy?: any, paginate?: any): Database.ISearchParameters {
         const searchParameters: Database.ISearchParameters = {
@@ -58,8 +58,8 @@ export class SearchParameterConverter implements Database.IISearchParameterConve
         const mapByFieldName = searchableFields.reduce((p, c) => {
             const map = {};
             map[c.fieldName] = c;
-            return Object.assign(map, p);
-        }, {});
+            return {...map, ...p};
+        },                                             {});
         /*
             orderBy, limit and offset are parsed earlier.
             page, pagination are added automatically by hapi-pagination

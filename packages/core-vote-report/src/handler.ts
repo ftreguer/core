@@ -7,13 +7,13 @@ import sumBy from "lodash.sumby";
 const formatDelegates = (
     delegates: State.IWallet[],
     lastHeight: number,
-): Array<{
+): {
     rank: string;
     username: string;
     approval: string;
     votes: string;
     voterCount: string;
-}> => {
+}[] => {
     const databaseService: Database.IDatabaseService = app.resolvePlugin<Database.IDatabaseService>("database");
 
     return delegates.map((delegate: State.IWallet) => {
@@ -76,7 +76,7 @@ export const handler = (request, h) => {
 
     const voters: State.IWallet[] = databaseService.walletManager
         .allByPublicKey()
-        .filter(wallet => wallet.vote && (wallet.balance as Utils.BigNumber).gt(0.1 * 1e8));
+        .filter(wallet => wallet.vote && (wallet.balance).gt(0.1 * 1e8));
 
     const totalVotes: number = sumBy(voters, wallet => +wallet.balance.toFixed());
     const percentage: number = (totalVotes * 100) / supply;

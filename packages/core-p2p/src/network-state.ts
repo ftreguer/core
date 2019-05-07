@@ -24,7 +24,7 @@ class QuorumDetails implements P2P.IQuorumDetails {
 export class NetworkState implements P2P.INetworkState {
     public nodeHeight: number;
     public lastBlockId: string;
-    private quorumDetails: QuorumDetails;
+    private readonly quorumDetails: QuorumDetails;
 
     public constructor(readonly status: NetworkStateStatus, lastBlock?: Interfaces.IBlock) {
         this.quorumDetails = new QuorumDetails();
@@ -53,7 +53,7 @@ export class NetworkState implements P2P.INetworkState {
             return new NetworkState(NetworkStateStatus.BelowMinimumPeers, lastBlock);
         }
 
-        return this.analyzeNetwork(lastBlock, peers);
+        return NetworkState.analyzeNetwork(lastBlock, peers);
     }
 
     public static parse(data: any): P2P.INetworkState {

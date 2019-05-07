@@ -240,7 +240,7 @@ export class PostgresConnection implements Database.IConnection {
         let runMigration = !row;
         if (!runMigration) {
             const { missingAsset } = await this.db.one(
-                `SELECT EXISTS (SELECT id FROM transactions WHERE type > 0 AND asset IS NULL) as "missingAsset"`,
+                "SELECT EXISTS (SELECT id FROM transactions WHERE type > 0 AND asset IS NULL) as \"missingAsset\"",
             );
             if (missingAsset) {
                 await this.db.none(`DELETE FROM migrations WHERE name = '${name}'`);
@@ -251,19 +251,17 @@ export class PostgresConnection implements Database.IConnection {
         if (!runMigration) {
             return;
         }
-        this.logger.warn(`Migrating transactions table. This may take a while.`);
+        this.logger.warn("Migrating transactions table. This may take a while.");
 
         await this.query.none(migration);
 
         const all = await this.db.manyOrNone("SELECT id, serialized FROM transactions WHERE type > 0");
         const { transactionIdFixTable } = Managers.configManager.get("exceptions");
 
-        const chunks: Array<
-            Array<{
+        const chunks: {
                 serialized: Buffer;
                 id: string;
-            }>
-        > = chunk(all, 20000);
+            }[][] = chunk(all, 20000);
 
         for (const chunk of chunks) {
             await this.db.task(task => {

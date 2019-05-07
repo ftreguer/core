@@ -5,7 +5,7 @@ import { IPeerData } from "../interfaces";
 import { validateJSON } from "./validate-json";
 
 export const restorePeers = (): IPeerData[] => {
-    const path: string = `${process.env.CORE_PATH_CACHE}/peers.json`;
+    const path = `${process.env.CORE_PATH_CACHE}/peers.json`;
 
     if (!existsSync(path)) {
         return [];

@@ -12,7 +12,7 @@ export class Memory {
      * - lookup sorts if it is not sorted, complexity: O(n*log(n) + flag it as sorted
      */
     private all: Interfaces.ITransaction[] = [];
-    private allIsSorted: boolean = true;
+    private allIsSorted = true;
     private byId: { [key: string]: Interfaces.ITransaction } = {};
     private bySender: { [key: string]: Set<Interfaces.ITransaction> } = {};
     private byType: { [key: number]: Set<Interfaces.ITransaction> } = {};
@@ -20,7 +20,7 @@ export class Memory {
      * Contains only transactions that have expiration, possibly sorted by height (lower first).
      */
     private byExpiration: Interfaces.ITransaction[] = [];
-    private byExpirationIsSorted: boolean = true;
+    private byExpirationIsSorted = true;
     private readonly dirty: { added: Set<string>; removed: Set<string> } = {
         added: new Set(),
         removed: new Set(),

@@ -5,9 +5,9 @@ export interface IWebhook {
     event: string;
     target: string;
     enabled: boolean;
-    conditions: Array<{
+    conditions: {
         key: string;
         value: any;
         condition: string;
-    }>;
+    }[];
 }

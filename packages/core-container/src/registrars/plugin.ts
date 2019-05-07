@@ -5,10 +5,10 @@ import isString from "lodash.isstring";
 import semver from "semver";
 
 export class PluginRegistrar {
-    private container: any;
-    private plugins: any;
-    private options: any;
-    private deregister: any;
+    private readonly container: any;
+    private readonly plugins: any;
+    private readonly options: any;
+    private readonly deregister: any;
 
     constructor(container: Container.IContainer, options: Record<string, any> = {}) {
         this.container = container;

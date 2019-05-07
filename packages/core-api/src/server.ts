@@ -5,12 +5,12 @@ import Hapi from "@hapi/hapi";
 import { registerFormats } from "./formats";
 
 export class Server {
-    private logger = app.resolvePlugin<Logger.ILogger>("logger");
+    private readonly logger = app.resolvePlugin<Logger.ILogger>("logger");
 
     private http: any;
     private https: any;
 
-    public constructor(private config: any) {}
+    public constructor(private readonly config: any) {}
 
     public async start(): Promise<void> {
         const options = {
@@ -45,12 +45,12 @@ export class Server {
 
     public async stop(): Promise<void> {
         if (this.http) {
-            this.logger.info(`Stopping Public HTTP API`);
+            this.logger.info("Stopping Public HTTP API");
             await this.http.stop();
         }
 
         if (this.https) {
-            this.logger.info(`Stopping Public HTTPS API`);
+            this.logger.info("Stopping Public HTTPS API");
             await this.https.stop();
         }
     }

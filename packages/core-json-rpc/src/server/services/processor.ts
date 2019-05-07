@@ -69,7 +69,7 @@ export class Processor {
     public async collection<T = any>(
         server: Server,
         payloads: IRequestParameters[],
-    ): Promise<Array<IResponse<T>> | IResponseError[]> {
+    ): Promise<IResponse<T>[] | IResponseError[]> {
         const results = [];
 
         for (const payload of payloads) {

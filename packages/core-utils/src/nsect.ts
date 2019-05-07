@@ -29,7 +29,7 @@ export class NSect {
     public async find(low: number, high: number): Promise<number> {
         let highestMatching: number;
 
-        for (;;) {
+        while (true) {
             const indexesToProbe: number[] = this.calcProbes(low, high);
 
             const temp: number = await this.probe(indexesToProbe);

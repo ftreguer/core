@@ -20,7 +20,7 @@ export const plugin: Container.IPluginDescriptor = {
     },
     async deregister(container: Container.IContainer, options) {
         if (options.enabled) {
-            container.resolvePlugin<Logger.ILogger>("logger").info(`Stopping Public API`);
+            container.resolvePlugin<Logger.ILogger>("logger").info("Stopping Public API");
 
             await container.resolvePlugin<Server>("api").stop();
         }

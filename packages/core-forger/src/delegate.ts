@@ -4,23 +4,6 @@ import { authenticator } from "otplib";
 import wif from "wif";
 
 export class Delegate {
-    public static encryptPassphrase(passphrase: string, network: Types.NetworkType, password: string): string {
-        const keys = Identities.Keys.fromPassphrase(passphrase);
-        const decoded = wif.decode(Identities.WIF.fromKeys(keys, network), network.wif);
-
-        return Crypto.bip38.encrypt(decoded.privateKey, decoded.compressed, password);
-    }
-
-    public static decryptPassphrase(
-        passphrase: string,
-        network: Types.NetworkType,
-        password: string,
-    ): Interfaces.IKeyPair {
-        const decryptedWif: Interfaces.IDecryptResult = Crypto.bip38.decrypt(passphrase, password);
-        const wifKey: string = wif.encode(network.wif, decryptedWif.privateKey, decryptedWif.compressed);
-
-        return Identities.Keys.fromWIF(wifKey, network);
-    }
 
     public network: Types.NetworkType;
     public keySize: number;
@@ -29,7 +12,7 @@ export class Delegate {
     public publicKey: string;
     public address: string;
     public otpSecret: string;
-    public bip38: boolean = false;
+    public bip38 = false;
     public otp: string;
     public encryptedKeys: string;
 
@@ -57,6 +40,23 @@ export class Delegate {
             this.publicKey = this.keys.publicKey;
             this.address = Identities.Address.fromPublicKey(this.publicKey, network.pubKeyHash);
         }
+    }
+    public static encryptPassphrase(passphrase: string, network: Types.NetworkType, password: string): string {
+        const keys = Identities.Keys.fromPassphrase(passphrase);
+        const decoded = wif.decode(Identities.WIF.fromKeys(keys, network), network.wif);
+
+        return Crypto.bip38.encrypt(decoded.privateKey, decoded.compressed, password);
+    }
+
+    public static decryptPassphrase(
+        passphrase: string,
+        network: Types.NetworkType,
+        password: string,
+    ): Interfaces.IKeyPair {
+        const decryptedWif: Interfaces.IDecryptResult = Crypto.bip38.decrypt(passphrase, password);
+        const wifKey: string = wif.encode(network.wif, decryptedWif.privateKey, decryptedWif.compressed);
+
+        return Identities.Keys.fromWIF(wifKey, network);
     }
 
     public encryptKeysWithOtp(): void {

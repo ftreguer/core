@@ -68,7 +68,7 @@ export class Storage {
     }
 
     public loadAll(): Interfaces.ITransaction[] {
-        const rows: Array<{ serialized: string }> = this.database
+        const rows: { serialized: string }[] = this.database
             .prepare(`SELECT LOWER(HEX(serialized)) AS serialized FROM ${this.table};`)
             .all();
 

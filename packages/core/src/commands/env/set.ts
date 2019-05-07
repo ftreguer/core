@@ -4,7 +4,7 @@ import { CommandFlags } from "../../types";
 import { BaseCommand } from "../command";
 
 export class SetCommand extends BaseCommand {
-    public static description: string = "Set the value of an environment variable";
+    public static description = "Set the value of an environment variable";
 
     public static examples: string[] = [
         `Set the log level
@@ -16,7 +16,7 @@ $ ark env:set CORE_LOG_LEVEL info
         ...BaseCommand.flagsNetwork,
     };
 
-    public static args: Array<{ name: string; required: boolean; hidden: boolean }> = [
+    public static args: { name: string; required: boolean; hidden: boolean }[] = [
         { name: "key", required: true, hidden: false },
         { name: "value", required: true, hidden: false },
     ];

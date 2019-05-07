@@ -121,7 +121,7 @@ export const registerMethods = server => {
             ...request.query,
             ...paginate(request),
         }))
-        .method("v2.wallets.top", top, 30, request => paginate(request))
+        .method("v2.wallets.top", top, 30, paginate)
         .method("v2.wallets.show", show, 8, request => ({ id: request.params.id }))
         .method("v2.wallets.transactions", transactions, 30, request => ({
             ...{ id: request.params.id },

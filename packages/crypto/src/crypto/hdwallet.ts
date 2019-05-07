@@ -38,14 +38,14 @@ export class HDWallet {
     /**
      * Derives a node from the coin type as specified by slip44.
      */
-    public static deriveSlip44(root: bip32.BIP32, hardened: boolean = true): bip32.BIP32 {
-        return root.derivePath(`m/44'/${this.slip44}${hardened ? "'" : ""}`);
+    public static deriveSlip44(root: bip32.BIP32, hardened = true): bip32.BIP32 {
+        return root.derivePath(`m/44'/${HDWallet.slip44}${hardened ? "'" : ""}`);
     }
 
     /**
      * Derives a node from the network as specified by AIP20.
      */
     public static deriveNetwork(root: bip32.BIP32): bip32.BIP32 {
-        return this.deriveSlip44(root).deriveHardened(configManager.get("network.aip20") || 1);
+        return HDWallet.deriveSlip44(root).deriveHardened(configManager.get("network.aip20") || 1);
     }
 }

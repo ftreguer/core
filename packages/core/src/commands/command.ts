@@ -79,7 +79,7 @@ export abstract class BaseCommand extends Command {
         }),
     };
 
-    protected tasks: Array<{ title: string; task: any }> = [];
+    protected tasks: { title: string; task: any }[] = [];
 
     protected buildPeerOptions(flags: CommandFlags) {
         const config = {
@@ -188,7 +188,7 @@ export abstract class BaseCommand extends Command {
 
                 if (!folders || folders.length === 0) {
                     this.error(
-                        'We were unable to detect any configuration. Please run "ark config:publish" and try again.',
+                        "We were unable to detect any configuration. Please run \"ark config:publish\" and try again.",
                     );
                 }
 
@@ -221,7 +221,7 @@ export abstract class BaseCommand extends Command {
                 }
             } catch (error) {
                 this.error(
-                    'We were unable to detect any configuration. Please run "ark config:publish" and try again.',
+                    "We were unable to detect any configuration. Please run \"ark config:publish\" and try again.",
                 );
             }
         }
@@ -307,7 +307,7 @@ export abstract class BaseCommand extends Command {
         return this.getNetworks().map(network => ({ title: network, value: network }));
     }
 
-    protected async restartRunningProcessPrompt(processName: string, showPrompt: boolean = true) {
+    protected async restartRunningProcessPrompt(processName: string, showPrompt = true) {
         if (processManager.isRunning(processName)) {
             if (showPrompt) {
                 await confirm(`Would you like to restart the ${processName} process?`, () => {

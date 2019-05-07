@@ -20,6 +20,6 @@ export class ReplayError extends Error {
 
 export class FailedToReplayBlocksError extends ReplayError {
     constructor() {
-        super(`Failed to replay some blocks.`);
+        super("Failed to replay some blocks.");
     }
 }

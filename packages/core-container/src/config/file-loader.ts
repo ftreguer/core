@@ -68,7 +68,7 @@ export class FileLoader {
     }
 
     private async buildPeers(configFile: any): Promise<void> {
-        let fetchedList: Array<{ ip: string; port: number }>;
+        let fetchedList: { ip: string; port: number }[];
 
         if (configFile.sources) {
             for (const source of configFile.sources) {

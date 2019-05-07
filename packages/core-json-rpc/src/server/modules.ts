@@ -37,7 +37,7 @@ export const blocks = [
                 query: { orderBy: "height:desc", limit: 1 },
             });
 
-            return response ? response.data[0] : Boom.notFound(`Latest block could not be found.`);
+            return response ? response.data[0] : Boom.notFound("Latest block could not be found.");
         },
     },
     {

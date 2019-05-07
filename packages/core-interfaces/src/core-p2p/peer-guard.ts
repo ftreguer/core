@@ -25,9 +25,9 @@ export interface IPeerSuspension {
 }
 
 export interface IOffence {
-    until: () => Dato;
     reason: string;
     severity?: "low" | "medium" | "high" | "critical";
+    until(): Dato;
 }
 
 export interface IPunishment {

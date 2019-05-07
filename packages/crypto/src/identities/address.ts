@@ -29,7 +29,7 @@ export class Address {
     }
 
     public static fromMultiSignatureAsset(asset: IMultiSignatureAsset, networkVersion?: number): string {
-        return this.fromPublicKey(PublicKey.fromMultiSignatureAsset(asset), networkVersion);
+        return Address.fromPublicKey(PublicKey.fromMultiSignatureAsset(asset), networkVersion);
     }
 
     public static fromPrivateKey(privateKey, networkVersion?: number): string {

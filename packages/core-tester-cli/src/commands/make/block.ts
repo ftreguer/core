@@ -7,7 +7,7 @@ import { copyToClipboard } from "../../utils";
 import { BaseCommand } from "../command";
 
 export class BlockCommand extends BaseCommand {
-    public static description: string = "create new blocks";
+    public static description = "create new blocks";
 
     public static flags = {
         ...BaseCommand.flagsConfig,
@@ -33,7 +33,7 @@ export class BlockCommand extends BaseCommand {
             default: "clay harbor enemy utility margin pretty hub comic piece aerobic umbrella acquire",
         }),
         previousBlock: flags.string({
-            description: `Previous block to base the generated block(s) on. For example: '{ "height": 50, "id": "123", "idHex": "7b" }'`,
+            description: "Previous block to base the generated block(s) on. For example: '{ \"height\": 50, \"id\": \"123\", \"idHex\": \"7b\" }'",
         }),
         write: flags.boolean({
             description: "write the blocks to the disk",

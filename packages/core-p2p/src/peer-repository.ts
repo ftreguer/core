@@ -7,7 +7,7 @@ export class PeerRepository<T> implements P2P.IPeerRepository<T> {
         return this.repository;
     }
 
-    public entries(): Array<[string, T]> {
+    public entries(): [string, T][] {
         return [...this.repository.entries()];
     }
 

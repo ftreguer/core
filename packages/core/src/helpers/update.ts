@@ -42,7 +42,7 @@ export const installFromChannel = async (pkg, channel) => {
 export const getRegistryChannel = (config: IConfig): string => {
     const channels: string[] = ["next"];
 
-    let channel: string = "latest";
+    let channel = "latest";
     for (const item of channels) {
         if (config.version.includes(`-${item}`)) {
             channel = item;
@@ -75,7 +75,7 @@ export const checkForUpdates = async ({ config, error, warn }): Promise<any> => 
 
     if (existsSync(join(__dirname, "../../../..", ".git"))) {
         if (!process.env.CORE_DEVELOPER_MODE) {
-            warn(`You are using a git clone for developers. Please install core via yarn for auto-updates.`);
+            warn("You are using a git clone for developers. Please install core via yarn for auto-updates.");
         }
 
         return state;
@@ -84,7 +84,7 @@ export const checkForUpdates = async ({ config, error, warn }): Promise<any> => 
     try {
         const cacheFile = ensureCacheFile(config);
 
-        cli.action.start(`Checking for updates`);
+        cli.action.start("Checking for updates");
         const latestVersion = await getLatestVersion(state.name, state.channel);
         cli.action.stop();
 

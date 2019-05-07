@@ -8,62 +8,6 @@ import { deserializer } from "./deserializer";
 import { Serializer } from "./serializer";
 
 export class Block implements IBlock {
-    public static applySchema(data: IBlockData): IBlockData {
-        const { value, error } = validator.validate("block", data);
-
-        if (
-            error &&
-            !(isException(value) || data.transactions.some((transaction: ITransactionData) => isException(transaction)))
-        ) {
-            throw new BlockSchemaError(error);
-        }
-
-        return value;
-    }
-
-    public static deserialize(hexString: string, headerOnly: boolean = false): IBlockData {
-        return deserializer.deserialize(hexString, headerOnly).data;
-    }
-
-    public static serializeWithTransactions(block: IBlockData) {
-        return Serializer.serializeWithTransactions(block);
-    }
-
-    public static serialize(block: IBlockData, includeSignature: boolean = true) {
-        return Serializer.serialize(block, includeSignature);
-    }
-
-    public static getIdHex(data: IBlockData): string {
-        const constants = configManager.getMilestone(data.height);
-        const payloadHash: Buffer = Block.serialize(data);
-
-        const hash: Buffer = HashAlgorithms.sha256(payloadHash);
-
-        if (constants.block.idFullSha256) {
-            return hash.toString("hex");
-        }
-
-        const temp: Buffer = Buffer.alloc(8);
-
-        for (let i = 0; i < 8; i++) {
-            temp[i] = hash[7 - i];
-        }
-
-        return temp.toString("hex");
-    }
-
-    public static toBytesHex(data): string {
-        const temp: string = data ? BigNumber.make(data).toString(16) : "";
-
-        return "0".repeat(16 - temp.length) + temp;
-    }
-
-    public static getId(data: IBlockData): string {
-        const constants = configManager.getMilestone(data.height);
-        const idHex: string = Block.getIdHex(data);
-
-        return constants.block.idFullSha256 ? idHex : BigNumber.make(idHex, 16).toFixed();
-    }
 
     public serialized: string;
     public data: IBlockData;
@@ -102,9 +46,65 @@ export class Block implements IBlock {
             );
         }
     }
+    public static applySchema(data: IBlockData): IBlockData {
+        const { value, error } = validator.validate("block", data);
+
+        if (
+            error &&
+            !(isException(value) || data.transactions.some(isException))
+        ) {
+            throw new BlockSchemaError(error);
+        }
+
+        return value;
+    }
+
+    public static deserialize(hexString: string, headerOnly = false): IBlockData {
+        return deserializer.deserialize(hexString, headerOnly).data;
+    }
+
+    public static serializeWithTransactions(block: IBlockData) {
+        return Serializer.serializeWithTransactions(block);
+    }
+
+    public static serialize(block: IBlockData, includeSignature = true) {
+        return Serializer.serialize(block, includeSignature);
+    }
+
+    public static getIdHex(data: IBlockData): string {
+        const constants = configManager.getMilestone(data.height);
+        const payloadHash: Buffer = Block.serialize(data);
+
+        const hash: Buffer = HashAlgorithms.sha256(payloadHash);
+
+        if (constants.block.idFullSha256) {
+            return hash.toString("hex");
+        }
+
+        const temp: Buffer = Buffer.alloc(8);
+
+        for (let i = 0; i < 8; i++) {
+            temp[i] = hash[7 - i];
+        }
+
+        return temp.toString("hex");
+    }
+
+    public static toBytesHex(data): string {
+        const temp: string = data ? BigNumber.make(data).toString(16) : "";
+
+        return "0".repeat(16 - temp.length) + temp;
+    }
+
+    public static getId(data: IBlockData): string {
+        const constants = configManager.getMilestone(data.height);
+        const idHex: string = Block.getIdHex(data);
+
+        return constants.block.idFullSha256 ? idHex : BigNumber.make(idHex, 16).toFixed();
+    }
 
     public getHeader(): IBlockData {
-        const header: IBlockData = Object.assign({}, this.data);
+        const header: IBlockData = {...this.data};
         delete header.transactions;
 
         return header;
@@ -144,7 +144,7 @@ export class Block implements IBlock {
                 }
             }
 
-            if (!(block.reward as BigNumber).isEqualTo(constants.reward)) {
+            if (!(block.reward).isEqualTo(constants.reward)) {
                 result.errors.push(["Invalid block reward:", block.reward, "expected:", constants.reward].join(" "));
             }
 
@@ -162,7 +162,7 @@ export class Block implements IBlock {
                 result.errors.push("Invalid block timestamp");
             }
 
-            let size: number = 0;
+            let size = 0;
             const invalidTransactions: ITransaction[] = this.transactions.filter(tx => !tx.verified);
             if (invalidTransactions.length > 0) {
                 result.errors.push("One or more transactions are not verified:");

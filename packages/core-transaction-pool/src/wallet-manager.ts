@@ -32,7 +32,7 @@ export class WalletManager extends Wallets.WalletManager {
             const senderAddress: string = Identities.Address.fromPublicKey(senderPublicKey);
 
             if (this.databaseService.walletManager.findByAddress(senderAddress).balance.isZero()) {
-                const message: string = "Cold wallet is not allowed to send until receiving transaction is confirmed.";
+                const message = "Cold wallet is not allowed to send until receiving transaction is confirmed.";
 
                 this.logger.error(message);
 

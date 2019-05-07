@@ -4,7 +4,7 @@ import { inspect } from "util";
 
 export abstract class AbstractLogger implements Logger.ILogger {
     protected logger: any;
-    protected silentConsole: boolean = false;
+    protected silentConsole = false;
     protected readonly defaultLevels: Record<string, string> = {
         error: "error",
         warn: "warn",
@@ -59,7 +59,7 @@ export abstract class AbstractLogger implements Logger.ILogger {
         return this.log(this.getLevel("verbose"), message);
     }
 
-    public suppressConsoleOutput(suppress: boolean = true): void {
+    public suppressConsoleOutput(suppress = true): void {
         this.silentConsole = suppress;
     }
 

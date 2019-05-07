@@ -17,7 +17,7 @@ import { transformTransaction } from "../versions/2/transactions/transformer";
 import { transformWallet } from "../versions/2/wallets/transformer";
 
 class Transformer {
-    private transformers: Map<number, any> = new Map();
+    private readonly transformers: Map<number, any> = new Map();
 
     public constructor() {
         this.transformers.set(1, {
