@@ -95,7 +95,7 @@ export class FileLoader {
             }
 
             for (const peer of fetchedList) {
-                if (!configFile.list.some(seed => seed.ip === peer.ip && seed.port === peer.port)) {
+                if (!configFile.list.some(seed => seed.ip === peer.ip)) {
                     configFile.list.push(peer);
                 }
             }
