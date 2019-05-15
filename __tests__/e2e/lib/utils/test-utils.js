@@ -34,7 +34,6 @@ class Helpers {
                     headers
                 });
         } catch (e) {
-            console.log(e)
             console.log("[api] request failed");
             if (method === "POST") {
                 console.log(e);
