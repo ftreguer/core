@@ -40,18 +40,23 @@ export const getCommonBlocks = async ({
     };
 };
 
+// @ts-ignore
 export const getStatus = async (): Promise<IPeerPingResponse> => {
-    const lastBlock: Interfaces.IBlock = app.resolvePlugin<Blockchain.IBlockchain>("blockchain").getLastBlock();
+    try {
+        const lastBlock: Interfaces.IBlock = app.resolvePlugin<Blockchain.IBlockchain>("blockchain").getLastBlock();
 
-    return {
-        state: {
-            height: lastBlock ? lastBlock.data.height : 0,
-            forgingAllowed: Crypto.Slots.isForgingAllowed(),
-            currentSlot: Crypto.Slots.getSlotNumber(),
-            header: lastBlock ? lastBlock.getHeader() : {},
-        },
-        config: getPeerConfig(),
-    };
+        return {
+            state: {
+                height: lastBlock ? lastBlock.data.height : 0,
+                forgingAllowed: Crypto.Slots.isForgingAllowed(),
+                currentSlot: Crypto.Slots.getSlotNumber(),
+                header: lastBlock ? lastBlock.getHeader() : {},
+            },
+            config: getPeerConfig(),
+        };
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 export const postBlock = async ({ req }): Promise<void> => {

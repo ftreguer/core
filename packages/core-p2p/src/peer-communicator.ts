@@ -193,6 +193,7 @@ export class PeerCommunicator implements P2P.IPeerCommunicator {
                 throw new Error(`Response validation failed from peer ${peer.ip} : ${JSON.stringify(response.data)}`);
             }
         } catch (e) {
+            console.log(e);
             this.handleSocketError(peer, e);
             return undefined;
         }
