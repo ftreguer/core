@@ -158,6 +158,8 @@ export class PeerProcessor implements P2P.IPeerProcessor {
 
             this.emitter.emit("peer.added", newPeer);
         } catch (error) {
+            console.log(error);
+
             if (error instanceof PeerPingTimeoutError) {
                 newPeer.latency = -1;
             }

@@ -141,6 +141,8 @@ export class NetworkMonitor implements P2P.INetworkMonitor {
                 try {
                     await this.communicator.ping(peer, pingDelay, forcePing);
                 } catch (error) {
+                    console.log(error)
+
                     unresponsivePeers++;
 
                     if (peerErrors[error]) {
