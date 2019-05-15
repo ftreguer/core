@@ -119,6 +119,7 @@ export class PeerCommunicator implements P2P.IPeerCommunicator {
 
             return body.common;
         } catch (error) {
+            console.log(error);
             const sfx = timeoutMsec !== undefined ? ` within ${timeoutMsec} ms` : "";
 
             this.logger.error(`Could not determine common blocks with ${peer.ip}${sfx}: ${error.message}`);
@@ -215,14 +216,17 @@ export class PeerCommunicator implements P2P.IPeerCommunicator {
                 break;
             case "TimeoutError": // socketcluster timeout error
             case SocketErrors.Timeout:
+                console.log([peer, error]);
                 peer.latency = -1;
                 this.emitter.emit("internal.p2p.suspendPeer", { peer });
                 break;
             case "Error":
             case "CoreSocketNotOpenError":
+                console.log([peer, error]);
                 this.emitter.emit("internal.p2p.suspendPeer", { peer });
                 break;
             default:
+                console.log([peer, error]);
                 this.logger.error(`Socket error (peer ${peer.ip}) : ${error.message}`);
                 this.emitter.emit("internal.p2p.suspendPeer", { peer });
         }

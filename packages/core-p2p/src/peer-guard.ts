@@ -67,7 +67,7 @@ export class PeerGuard implements P2P.IPeerGuard {
         if (state.forkedBlock && peer.ip === state.forkedBlock.ip) {
             return this.createPunishment(this.offences.fork);
         }
-
+        console.log(peer);
         const connection: SCClientSocket = this.connector.connection(peer);
 
         if (connection && connection.getState() !== connection.OPEN) {

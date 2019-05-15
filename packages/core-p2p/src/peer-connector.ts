@@ -31,6 +31,7 @@ export class PeerConnector implements P2P.IPeerConnector {
         this.connections.set(peer.ip, connection);
 
         this.connection(peer).on("error", err => {
+            console.log([peer, err]);
             this.emitter.emit("internal.p2p.suspendPeer", { peer });
         });
 
