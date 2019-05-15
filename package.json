@@ -91,11 +91,6 @@
         "packages/*",
         "plugins/*"
     ],
-    "husky": {
-        "hooks": {
-            "pre-commit": "cross-env-shell ./scripts/pre-commit.sh"
-        }
-    },
     "jest": {
         "testEnvironment": "node",
         "bail": true,
