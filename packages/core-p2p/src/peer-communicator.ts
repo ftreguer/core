@@ -94,11 +94,11 @@ export class PeerCommunicator implements P2P.IPeerCommunicator {
             return false;
         }
 
+        peer.version = config.version;
+
         if (!isValidVersion(peer)) {
             return false;
         }
-
-        peer.version = config.version;
 
         return true;
     }
